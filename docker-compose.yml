@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  nginx:
+    image: dockerize-vue
+    #network_mode: "host"
+    container_name: alif_quotes
+    ports:
+      - '2222:80'
