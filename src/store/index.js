@@ -5,6 +5,7 @@ import alertModule from './modules/alert';
 import loadingModule from './modules/loading';
 import categoriesModule from './modules/categories';
 import quotesModule from './modules/quotes';
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex)
 
@@ -25,5 +26,6 @@ export default new Vuex.Store({
   actions,
   mutations,
   getters,
-  modules
+  modules,
+  plugins: [createPersistedState()],
 })

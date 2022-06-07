@@ -4,7 +4,9 @@ import getters from './getters';
 
 
 const state = {
-    quotes: []
+    quotes: [],
+    shown_quotes: [],
+    random_quote: {},
 }
 
 export default {

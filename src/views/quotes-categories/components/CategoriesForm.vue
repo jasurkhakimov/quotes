@@ -7,7 +7,7 @@
                         <v-text-field
                             v-model="form.title"
                             label="Жанр цитаты"
-                            :rules="[rules.required]"
+                            :rules="[rules.required, rules.onlyAlphabetic]"
                             outlined
                             class="c-field"
                         ></v-text-field>

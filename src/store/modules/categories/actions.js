@@ -5,7 +5,8 @@ import {
     collection,
     addDoc,
     getDocs,
-
+    query,
+    orderBy
 } from "firebase/firestore";
 
 const collection_name = 'categories';
@@ -16,8 +17,9 @@ const categoriesRef = collection(db, collection_name);
 export default {
     async [LOAD_CATEGORIES]() {
         try {
+            const q = query(categoriesRef, orderBy('created_at', 'desc'))
             store.dispatch('loading/SET_LOADING', true);
-            const snapshot = await getDocs(categoriesRef);
+            const snapshot = await getDocs(q);
             let categories = [];
             snapshot.forEach(doc => {
                 categories.push({

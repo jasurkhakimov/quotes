@@ -16,7 +16,7 @@
                         <v-text-field
                             v-model="form.author"
                             label="Автор цитаты"
-                            :rules="[rules.required]"
+                            :rules="[rules.required, rules.onlyAlphabetic]"
                             outlined
                             class="c-field"
                         ></v-text-field>

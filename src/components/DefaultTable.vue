@@ -5,6 +5,7 @@
         :items-per-page="15"
         class="c-table"
         :search="search"
+        show-group-by
     >
         <template v-slot:top>
             <div class="d-flex align-center ma-3">
@@ -22,11 +23,19 @@
             </div>
         </template>
 
+        <template v-slot:item.quote="{ item }">
+            {{ item.quote | slice }}
+        </template>
         <template v-slot:item.created_at="{ item }">
             {{ item.created_at | format_date }}
         </template>
         <template v-slot:item.updated_at="{ item }">
             {{ item.updated_at | format_date }}
+        </template>
+        <template v-slot:item.category="{ item }">
+            <v-chip dark color="var(--green)" class="ml-1" x-small v-for="(cat, index) in item.category" :key="index">
+                {{ cat }}
+            </v-chip>
         </template>
 
         <template v-slot:item.actions="{ item }">
@@ -61,12 +70,16 @@ export default {
     props: {
         headers: Array,
         items: Array,
+        group_by: String
     },
     data: () => ({
         search: "",
     }),
     filters: {
         format_date,
+        slice(text) {
+            return `${text.slice(0, 20)}...`;
+        }
     },
 };
 </script>
