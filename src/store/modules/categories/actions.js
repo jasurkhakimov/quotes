@@ -1,4 +1,4 @@
-import { LOAD_QUOTES, ADD_NEW_QUOTE, REMOVE_QUOTE, UPDATE_QUOTE } from "./types"
+import { LOAD_CATEGORIES, ADD_NEW_CATEGORY, REMOVE_CATEGORY, UPDATE_CATEGORY } from "./types"
 import { db } from "@/firebaseInit";
 import store from "@/store";
 import {
@@ -8,13 +8,13 @@ import {
 
 } from "firebase/firestore";
 
-const collection_name = 'quotes';
+const collection_name = 'categories';
 
 const categoriesRef = collection(db, collection_name);
 
 
 export default {
-    async [LOAD_QUOTES]() {
+    async [LOAD_CATEGORIES]() {
         try {
             store.dispatch('loading/SET_LOADING', true);
             const snapshot = await getDocs(categoriesRef);
@@ -32,12 +32,13 @@ export default {
             store.dispatch('loading/SET_LOADING', false);
         }
     },
-    async [ADD_NEW_QUOTE](context, payload) {
+    async [ADD_NEW_CATEGORY](context, title) {
         try {
             store.dispatch('loading/SET_LOADING', true);
             const { id } = await addDoc(categoriesRef, {
-                ...payload,
+                title,
                 created_at: Date.now(),
+                updated_at: null,
             });
             if (id) {
                 store.dispatch('alert/SET_ALERT', {
@@ -58,7 +59,7 @@ export default {
             store.dispatch('loading/SET_LOADING', false);
         }
     },
-    async [REMOVE_QUOTE](context, id) {
+    async [REMOVE_CATEGORY](context, id) {
         try {
             store.dispatch('loading/SET_LOADING', true);
             await db.collection(collection_name).doc(id).delete();
@@ -80,12 +81,12 @@ export default {
             store.dispatch('loading/SET_LOADING', false);
         }
     },
-    async [UPDATE_QUOTE](context, { id, ...payload }) {
+    async [UPDATE_CATEGORY](context, { id, title }) {
         try {
             store.dispatch('loading/SET_LOADING', true);
             await db.collection(collection_name).doc(id).update({
+                title,
                 updated_at: Date.now(),
-                ...payload,
             });
 
             store.dispatch('alert/SET_ALERT', {

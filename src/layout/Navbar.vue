@@ -35,6 +35,10 @@ a.navbar__link {
     padding: 10px 16px;
     color: var(--dark);
     transition: 0.2s all ease;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
         background-color: var(--blue);

@@ -1,7 +1,7 @@
 <template>
     <v-row>
-        <v-col offset-md="4" md="4">
-            <v-form ref="form" v-model="valid" class="c-form">
+        <v-col offset-md="2" md="8">
+            <v-form ref="form" v-model="valid" class="c_form">
                 <v-row no-gutters>
                     <v-col cols="12">
                         <v-textarea
@@ -26,13 +26,33 @@
                             v-model="form.category"
                             label="Жанр цитаты"
                             :rules="[rules.notEmptyArray]"
+                            :items="refs.categories"
+                            item-text="title"
+                            item-value="title"
+                            multiple
+                            chips
                             outlined
                             class="c-field"
                         ></v-autocomplete>
                     </v-col>
                     <v-col cols="12">
-                        <v-btn @click="add_new_quote()" depressed color="var(--green)" dark>
+                        <v-btn
+                            @click="add_new_quote()"
+                            depressed
+                            color="var(--green)"
+                            dark
+                            v-if="!type_edit"
+                        >
                             Добавить
+                        </v-btn>
+                        <v-btn
+                            @click="update_quote()"
+                            depressed
+                            color="var(--orange)"
+                            dark
+                            v-else
+                        >
+                            Обновить
                         </v-btn>
                         <v-btn
                             @click="reset()"
@@ -55,23 +75,22 @@ import rules from "@/utils/rules";
 
 export default {
     name: "QuotesForm",
+    props: {
+        refs: Object,
+        type_edit: Boolean,
+        edit_item: Object,
+    },
     data: () => ({
         valid: false,
         form: {
-            id: "",
             quote: "",
             author: "",
             category: [],
-            createdAt: "",
-            updatedAt: "",
         },
         default_form: {
-            id: "",
             quote: "",
             author: "",
             category: [],
-            createdAt: "",
-            updatedAt: "",
         },
         rules,
     }),
@@ -79,18 +98,27 @@ export default {
         reset() {
             this.form = { ...this.default_form };
             this.$refs.form.resetValidation();
+            this.$emit("reset");
         },
         add_new_quote() {
             this.$refs.form.validate();
-
-            if(this.valid) {
-                console.log('lol');
+            if (this.valid) {
+                this.$emit("add", this.form);
             }
-        }
+        },
+        update_quote() {
+            this.$refs.form.validate();
+            if (this.valid) {
+                this.$emit("update", this.form);
+            }
+        },
+    },
+    watch: {
+        type_edit(val) {
+            if (val) {
+                this.form = { ...this.edit_item };
+            }
+        },
     },
 };
 </script>
-
-<style lang="scss">
-
-</style>

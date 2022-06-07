@@ -8,6 +8,7 @@
     --green: #2bc57b;
     --blue: #1f64ff;
     --red: #ff5757;
+    --orange: #ffb049;
 
     --radius: 8px;
     --radius-sm: 5px;
@@ -16,6 +17,18 @@
 
 .v-application a {
     text-decoration: none;
+}
+
+.c_form {
+    border: 1px solid var(--lightgrey);
+    padding: 12px;
+    border-radius: var(--radius);
+}
+
+.с_form {
+    border: 1px solid var(--lightgrey);
+    padding: 12px;
+    border-radius: var(--radius);
 }
 
 .c-field .v-input__slot {
@@ -40,8 +53,3 @@
     border-color: var(--blue) !important;
 }
 
-.с-form {
-    border: 1px solid var(--lightgrey);
-    padding: 12px;
-    border-radius: var(--radius);
-}

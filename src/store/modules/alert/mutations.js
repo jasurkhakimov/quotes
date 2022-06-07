@@ -1,7 +1,7 @@
-import { SET_ALERT } from "./types";
+
 
 export default {
-    [SET_ALERT] (state, alert) {
+    set_alert (state, alert) {
         state.alert = {...alert, status: true};
     },
     reset_alert(state) {
